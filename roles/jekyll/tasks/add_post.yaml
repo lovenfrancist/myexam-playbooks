@@ -1,8 +1,8 @@
 ---
 - name: Generate content
-  command: "fortune"
+  command: fortune
   register: post_body_out
-  ignore_errors: true
+  # ignore_errors: true
 
 - set_fact:
       post_title: "{{ post_body_out.stdout[:25].strip() }}"

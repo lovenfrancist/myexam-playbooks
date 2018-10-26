@@ -1,0 +1,32 @@
+---
+- name: Get current version
+  include_vars:
+    file: "{{ jekyll_project_path }}/_config.yml"
+
+- set_fact:
+    current_version: "{{ description.split(':')[1].strip() }}"
+
+- set_fact:
+    c_major: "{{ current_version.split('.')[0] | int }}"
+    c_minor: "{{ current_version.split('.')[1] | int }}"
+    c_bugfix: "{{ current_version.split('.')[2] | int }}"
+
+- set_fact:
+    new_version: "{{ c_major }}.{{ c_minor }}.{{ c_bugfix | int + 1 }}"
+  when: increment == "bugfix"
+
+- set_fact:
+    new_version: "{{ c_major }}.{{ c_minor | int + 1 }}.{{ c_bugfix }}"
+  when: increment == "minor"
+
+- set_fact:
+    new_version: "{{ c_major| int + 1  }}.{{ c_minor }}.{{ c_bugfix }}"
+  when: increment == "major"
+
+# - debug: msg="new_version:{{ new_version }}"
+
+- template:
+    src: _config.yaml.j2
+    dest: "{{ jekyll_project_path }}/_config.yaml"
+  vars:
+    version: "{{ new_version }}"
