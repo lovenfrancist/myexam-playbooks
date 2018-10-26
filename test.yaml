@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  tasks:
+    - debug: var=ansible_date_time
+
+    - debug: msg="the current date is {{ ansible_date_time.date }}"
+
+    - name: Generate content
+      command: "fortune"
+      register: post_body_out
+      ignore_errors: true
+
+    - debug: msg="post_body_out={{ post_body_out.stdout }}"
+
+    - debug: msg="post_title={{ post_body_out.stdout[:25]}}"
