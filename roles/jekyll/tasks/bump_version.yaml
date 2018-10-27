@@ -3,29 +3,35 @@
   include_vars:
     file: "{{ jekyll_project_path }}/_config.yml"
 
-- set_fact:
+- name: Initialize current_version variable
+  set_fact:
     current_version: "{{ description.split(':')[1].strip() }}"
 
-- set_fact:
+- name: Initialize c_major, c_minor, c_bugfix variables
+  set_fact:
     c_major: "{{ current_version.split('.')[0] | int }}"
     c_minor: "{{ current_version.split('.')[1] | int }}"
     c_bugfix: "{{ current_version.split('.')[2] | int }}"
 
-- set_fact:
+- name: Initialize new_version variable (bugfix)
+  set_fact:
     new_version: "{{ c_major }}.{{ c_minor }}.{{ c_bugfix | int + 1 }}"
   when: increment == "bugfix"
 
-- set_fact:
+- name: Initialize new_version variable (minor)
+  set_fact:
     new_version: "{{ c_major }}.{{ c_minor | int + 1 }}.{{ c_bugfix }}"
   when: increment == "minor"
 
-- set_fact:
+- name: Initialize new_version variable (major)
+  set_fact:
     new_version: "{{ c_major| int + 1  }}.{{ c_minor }}.{{ c_bugfix }}"
   when: increment == "major"
 
 # - debug: msg="new_version:{{ new_version }}"
 
-- template:
+- name: Overwrite _config.yaml
+  template:
     src: _config.yaml.j2
     dest: "{{ jekyll_project_path }}/_config.yaml"
   vars:
