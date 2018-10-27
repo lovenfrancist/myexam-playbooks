@@ -11,7 +11,7 @@
 
     - name: Initialize jekyll project path
       set_fact:
-        jekyll_project_path: "{{ playbook_dir }}../{{ jekyll_project_name }}"
+        jekyll_project_path: "{{ playbook_dir.split('/')[0:-1]|join('/') }}/{{ jekyll_project_name }}"
 
     - name: Verify proj_env
       fail:

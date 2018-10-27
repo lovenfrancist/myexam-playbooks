@@ -1,13 +1,9 @@
 ---
-- set_fact:
-      new_version: "x.x.x"
-
-- debug: msg="new_version:{{ new_version }}"
-
-- name: Overwrite _config.yaml
+- name: Create new post
   template:
-    src: _config.yaml.j2
-    dest: "/home/ubuntu/_config.yml"
-    force: yes
+    src: post.yaml.j2
+    dest: "{{ jekyll_project_path }}/_posts/{{ ansible_date_time.date }}-{{ post_title }}.markdown"
   vars:
-    version: "{{ new_version }}"
+    post_date: "{{ post_date }}"
+    post_title: "{{ post_title }}"
+    post_body: "{{ post_body_out.stdout }}"
