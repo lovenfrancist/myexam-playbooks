@@ -1,7 +1,7 @@
 ---
 - name: Get current version
   include_vars:
-    file: "{{ jekyll_project_path }}/_config.yml"
+    file: "{{ playbook_dir.split('/')[0:-1]|join('/') | string }}/{{ jekyll_project_name | string }}/_config.yml"
 
 - name: Initialize current_version variable
   set_fact:
@@ -33,7 +33,7 @@
 - name: Overwrite _config.yaml
   template:
     src: _config.yaml.j2
-    dest: "{{ jekyll_project_path }}/_config.yml"
+    dest: "{{ playbook_dir.split('/')[0:-1]|join('/') | string }}/{{ jekyll_project_name | string }}/_config.yml"
     force: yes
   vars:
     version: "{{ new_version }}"
