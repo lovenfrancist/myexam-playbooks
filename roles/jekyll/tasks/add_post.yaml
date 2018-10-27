@@ -1,6 +1,6 @@
 ---
 - name: Generate content
-  command: fortune
+  command: /usr/games/fortune
   register: post_body_out
   # ignore_errors: true
 

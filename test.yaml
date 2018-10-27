@@ -21,5 +21,7 @@
     # - debug: msg="new_version:{{ new_version }}"
 
     - name: Generate content
-      command: fortune
+      command: /usr/games/fortune
       register: post_body_out
+
+    - debug: msg="hostname:{{ post_body_out.stdout }}"
