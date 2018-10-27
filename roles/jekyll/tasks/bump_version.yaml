@@ -33,6 +33,7 @@
 - name: Overwrite _config.yaml
   template:
     src: _config.yaml.j2
-    dest: "{{ jekyll_project_path }}/_config.yaml"
+    dest: "{{ jekyll_project_path }}/_config.yml"
+    force: yes
   vars:
     version: "{{ new_version }}"

@@ -1,27 +1,24 @@
 ---
-- hosts: localhost
+- name: Create new post
+  hosts: localhost
+  remote_user: root
+  # become_method: sudo
+  gather_facts: yes
+  connection: ssh
+  pre_tasks:
+    - name: Verify jekyll_project_path
+      fail:
+        msg: "Variable jekyll_project_path should be defined. Exiting."
+      when: jekyll_project_path is not defined
   tasks:
-    # - name: Get current version
-    #   include_vars:
-    #     file: "{{ jekyll_project_path }}/_config.yml"
-    #
-    # - set_fact:
-    #     increment: "bugfix" # temp
-    #     current_version: "{{ description.split(':')[1].strip() }}"
-    #
-    # - set_fact:
-    #       c_major: "{{ current_version.split('.')[0] | int }}"
-    #       c_minor: "{{ current_version.split('.')[1] | int }}"
-    #       c_bugfix: "{{ current_version.split('.')[2] | int }}"
-    #
-    # - set_fact:
-    #       new_version: "{{ c_major }}.{{ c_minor }}.{{ c_bugfix | int + 1 }}"
-    #   when: increment == "bugfix"
-    #
-    # - debug: msg="new_version:{{ new_version }}"
+    - set_fact:
+          new_version: "x.x.x"
 
-    - name: Generate content
-      command: /usr/games/fortune
-      register: post_body_out
+    - debug: msg="new_version:{{ new_version }}"
 
-    - debug: msg="hostname:{{ post_body_out.stdout }}"
+    - include_role:
+        name: jekyll
+        tasks_from: test_task
+      vars:
+         increment: bugfix
+         jekyll_project_path: "{{ jekyll_project_path }}"
