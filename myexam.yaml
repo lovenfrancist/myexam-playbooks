@@ -8,6 +8,7 @@
     - name: Initialize jekyll project name
       set_fact:
         jekyll_project_path: /home/ubuntu/myexam
+      when: jekyll_project_path is not defined
 
     - name: Verify proj_env
       fail:
