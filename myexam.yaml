@@ -7,7 +7,7 @@
   pre_tasks:
     - name: Initialize jekyll project name
       set_fact:
-        jekyll_project_name: "lovenfrancist.github.io"
+        jekyll_project_path: /home/ubuntu/myexam
 
     - name: Verify proj_env
       fail:
@@ -36,4 +36,3 @@
         tasks_from: bump_version
       vars:
         increment: "{{ bump_increment }}"
-        jekyll_project_path: "{{ jekyll_project_path }}"
